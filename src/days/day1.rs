@@ -1,7 +1,6 @@
-use itertools::Itertools;
-use std::collections::HashMap;
-
 use super::Day;
+use itertools::Itertools;
+use std::{collections::HashMap, iter::zip};
 
 pub fn preprocess(input: &str) -> Box<dyn Day> {
 	let (mut left, mut right): (Vec<_>, Vec<_>) = input.lines().map(split_and_parse_line).unzip();
@@ -18,7 +17,7 @@ struct Day1 {
 }
 impl Day for Day1 {
 	fn part1(&self) -> i32 {
-		self.left.iter().zip(&self.right).map(|(l, r)| (l - r).abs()).sum()
+		zip(&self.left, &self.right).map(|(l, r)| (l - r).abs()).sum()
 	}
 
 	fn part2(&self) -> i32 {
