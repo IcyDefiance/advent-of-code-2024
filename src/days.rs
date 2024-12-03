@@ -1,4 +1,5 @@
 mod day1;
+mod day2;
 
 use chrono::{TimeDelta, Utc};
 use console::style;
@@ -14,7 +15,7 @@ pub trait Day {
 }
 
 lazy_static! {
-	static ref DAYS: Vec<fn(&str) -> Box<dyn Day>> = vec![day1::preprocess];
+	static ref DAYS: Vec<fn(&str) -> Box<dyn Day>> = vec![day1::preprocess, day2::preprocess];
 }
 
 pub fn run_day(day: usize, input: &str) {
