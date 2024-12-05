@@ -6,7 +6,7 @@ use nom::{
 	character::complete::{anychar, char, i32},
 	combinator::map,
 	multi::{many_till, many1},
-	sequence::{delimited, preceded, separated_pair},
+	sequence::{delimited, separated_pair},
 };
 
 pub fn preprocess(input: &str) -> Box<dyn Day> {
@@ -56,10 +56,7 @@ enum Instruction {
 
 fn program(input: &str) -> IResult<&str, Vec<Instruction>> {
 	let inst_mul = map(
-		preceded(
-			tag("mul"),
-			delimited(char('('), separated_pair(i32, char(','), i32), char(')')),
-		),
+		delimited(tag("mul("), separated_pair(i32, char(','), i32), char(')')),
 		|(num1, num2)| Instruction::Mul(num1, num2),
 	);
 	let inst_do = map(tag("do()"), |_| Instruction::Do);
