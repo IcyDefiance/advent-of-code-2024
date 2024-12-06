@@ -8,7 +8,7 @@ pub fn preprocess(input: &str) -> Box<dyn Day> {
 		.take_while(|l| l.len() > 1)
 		.map(|l| l.split('|').map(|x| x.parse().unwrap()).collect_tuple().unwrap())
 		.into_grouping_map()
-		.collect::<HashSet<_>>();
+		.collect();
 
 	let updates = input
 		.lines()
@@ -49,7 +49,7 @@ impl Day for Day5 {
 				let mut update = update.clone();
 				for i in 1..update.len() {
 					for j in 0..i {
-						if !self.ord_rules.get(&update[j]).and_then(|f| f.get(&update[i])).is_some() {
+						if self.ord_rules.get(&update[i]).and_then(|f| f.get(&update[j])).is_some() {
 							let moving = update.remove(i);
 							update.insert(j, moving);
 						}
