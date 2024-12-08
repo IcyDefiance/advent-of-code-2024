@@ -3,6 +3,7 @@ mod day2;
 mod day3;
 mod day4;
 mod day5;
+mod day6;
 
 use chrono::{TimeDelta, Utc};
 use console::style;
@@ -24,6 +25,7 @@ lazy_static! {
 		day3::preprocess,
 		day4::preprocess,
 		day5::preprocess,
+		day6::preprocess,
 	];
 }
 

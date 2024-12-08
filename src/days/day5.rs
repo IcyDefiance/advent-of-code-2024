@@ -1,6 +1,9 @@
 use super::Day;
 use itertools::Itertools;
-use std::collections::{HashMap, HashSet};
+use std::{
+	cmp::Ordering,
+	collections::{HashMap, HashSet},
+};
 
 pub fn preprocess(input: &str) -> Box<dyn Day> {
 	let ord_rules = input
@@ -47,14 +50,12 @@ impl Day for Day5 {
 			.filter(|update| !self.is_ordered(update))
 			.map(|update| {
 				let mut update = update.clone();
-				for i in 1..update.len() {
-					for j in 0..i {
-						if self.ord_rules.get(&update[i]).and_then(|f| f.get(&update[j])).is_some() {
-							let moving = update.remove(i);
-							update.insert(j, moving);
-						}
-					}
-				}
+				update.sort_by(|a, b| {
+					self.ord_rules
+						.get(a)
+						.and_then(|f| f.get(b))
+						.map_or(Ordering::Less, |_| Ordering::Greater)
+				});
 				update[update.len() / 2]
 			})
 			.sum()
